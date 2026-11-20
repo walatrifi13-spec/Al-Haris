@@ -1,0 +1,170 @@
+<!doctype html>
+<html lang="ar" dir="rtl">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<title>الحارس (Al Haris) – افحص قبل أن تضغط</title>
+<link href="https://fonts.googleapis.com/css2?family=Tajawal:wght@400;500;700&display=swap" rel="stylesheet">
+<style>
+:root{--bg:#F6F8FB;--card:#FFFFFF;--tx:#12263A;--mut:#5B6B7B;--ac:#0F766E;--ok:#067647;--wn:#B54708;--bad:#B42318;--bd:#DCE3EA;box-sizing:border-box;padding-top:env(safe-area-inset-top,0px);padding-bottom:env(safe-area-inset-bottom,0px)}
+@media (prefers-color-scheme:dark){:root:not([data-theme="light"]){--bg:#0E1621;--card:#162231;--tx:#E6EDF5;--mut:#9DB0C3;--ac:#2DD4BF;--ok:#4ADE80;--wn:#FBBF24;--bad:#F87171;--bd:#26384B}}
+:root[data-theme="dark"]{--bg:#0E1621;--card:#162231;--tx:#E6EDF5;--mut:#9DB0C3;--ac:#2DD4BF;--ok:#4ADE80;--wn:#FBBF24;--bad:#F87171;--bd:#26384B}
+html{scroll-padding-top:env(safe-area-inset-top,0px)}
+body{margin:0;background:var(--bg);color:var(--tx);font-family:Tajawal,Tahoma,Arial,sans-serif;font-size:17px;line-height:1.7}
+main{max-width:720px;margin:0 auto;padding:24px 16px 48px}
+h1{font-size:32px;margin:0 0 4px}
+.sub{color:var(--mut);margin:0 0 20px}
+.card{background:var(--card);border:1px solid var(--bd);border-radius:14px;padding:18px;margin-bottom:16px}
+textarea{width:100%;min-height:140px;box-sizing:border-box;border:1px solid var(--bd);border-radius:10px;padding:12px;font:inherit;background:var(--bg);color:var(--tx);resize:vertical}
+button{font:inherit;cursor:pointer;border-radius:10px;border:1px solid var(--bd);background:var(--card);color:var(--tx);padding:8px 14px}
+button.main{background:var(--ac);color:#fff;border-color:var(--ac);font-weight:700;padding:12px 28px;margin-top:12px}
+:root[data-theme="dark"] button.main{color:#0E1621}
+@media (prefers-color-scheme:dark){:root:not([data-theme="light"]) button.main{color:#0E1621}}
+button:disabled{opacity:.6;cursor:wait}
+.ex{display:flex;flex-wrap:wrap;gap:8px;margin-top:10px}
+.badge{display:inline-block;padding:4px 16px;border-radius:99px;color:#fff;font-weight:700;margin-bottom:8px}
+.safe{background:var(--ok)}.suspicious{background:var(--wn)}.dangerous{background:var(--bad)}
+:root[data-theme="dark"] .badge{color:#0E1621}
+@media (prefers-color-scheme:dark){:root:not([data-theme="light"]) .badge{color:#0E1621}}
+h3{margin:14px 0 4px;font-size:18px}
+ul{margin:0;padding-inline-start:22px}
+.src,.note{color:var(--mut);font-size:14px}
+.tabs{display:flex;flex-wrap:wrap;gap:8px;margin-bottom:16px}
+.tabs button.on{background:var(--ac);color:#fff;border-color:var(--ac);font-weight:700}
+:root[data-theme='dark'] .tabs button.on{color:#0E1621}
+@media (prefers-color-scheme:dark){:root:not([data-theme='light']) .tabs button.on{color:#0E1621}}
+select,input{font:inherit;padding:10px;border:1px solid var(--bd);border-radius:10px;background:var(--bg);color:var(--tx)}
+input{width:100%;box-sizing:border-box;direction:ltr;text-align:left;margin-top:8px}
+select{margin-top:10px}
+.phone{border:1px solid var(--bd);border-radius:16px;padding:12px 14px;background:var(--bg);margin-top:12px}
+</style>
+</head>
+<body>
+<main>
+<h1>الحارس <small style="font-size:18px;color:var(--mut)">Al Haris</small></h1>
+<p class="sub">افحص أي رسالة أو إيميل أو رابط أو مكالمة مشبوهة قبل أن تتصرف.</p>
+<div class="tabs"><button data-p="p1" class="on">فحص الرسائل والإيميل</button><button data-p="p2">كيف تكشف الاحتيال</button><button data-p="p3">التحقق من الروابط</button><button data-p="p4">التنبيهات</button></div>
+
+<div id="p1" class="pg"><div class="card">
+<label for="t"><b>الصق الرسالة أو الرابط هنا</b></label>
+<textarea id="t" placeholder="مثال: تم إيقاف حسابك، اضغط على الرابط خلال ساعتين..."></textarea>
+<select id="kind"><option>رسالة نصية أو واتساب</option><option>بريد إلكتروني</option><option>ما قاله المتصل في مكالمة</option></select>
+<div class="ex">
+<button data-i="0">مثال 1</button><button data-i="1">مثال 2</button><button data-i="2">مثال 3</button>
+</div>
+<button class="main" id="go">افحص الآن</button>
+</div>
+
+<div class="card" id="out" hidden>
+<span class="badge" id="lv"></span>
+<div id="sc"></div>
+<h3>لماذا؟</h3><ul id="rs"></ul>
+<h3>ماذا تفعل؟</h3><ul id="ac"></ul>
+<p class="src" id="src"></p>
+</div></div>
+<div id="p2" class="pg" hidden>
+<div class="card"><h3>كيف تكشف الإيميل المزيف</h3><ul>
+<li>عنوان المرسل لا يطابق اسم الجهة (مثل bank-support@gmail.com).</li>
+<li>تحية عامة مثل عزيزي العميل بدل اسمك.</li>
+<li>استعجال أو تهديد: سيُغلق حسابك خلال 24 ساعة.</li>
+<li>مرفق غير متوقع، أو رابط عنوانه الحقيقي يختلف عن النص المعروض.</li>
+<li>أخطاء لغوية أو شعار بجودة ضعيفة.</li>
+<li>طلب كلمة مرور أو بيانات بطاقة أو رمز تحقق.</li></ul></div>
+<div class="card"><h3>كيف تكشف مكالمة النصب</h3><ul>
+<li>متصل يدّعي أنه من البنك أو الشرطة أو شركة الاتصالات ويطلب رمز التحقق أو بيانات البطاقة أو الرقم السري.</li>
+<li>يطلب منك تثبيت برنامج للتحكم في هاتفك عن بعد.</li>
+<li>يطلب تحويل مال لحماية حسابك أو لدفع غرامة فوراً.</li>
+<li>يمنعك من إنهاء المكالمة أو الاتصال بجهة أخرى.</li>
+<li>جائزة أو وظيفة أو استرداد مبلغ لم تطلبه.</li></ul>
+<h3>القاعدة الذهبية</h3><p>أنهِ المكالمة، ثم اتصل بالجهة من الرقم الرسمي المطبوع على بطاقتك أو الموجود في موقعها الرسمي.</p></div>
+<div class="card"><h3>أبلغ عن الاحتيال في الإمارات</h3><ul>
+<li>أبوظبي، خدمة أمان: اتصال 8002626، أو رسالة إلى 2828، أو aman@adpolice.gov.ae</li>
+<li>دبي: منصة eCrime على ecrime.ae، أو اتصال 901</li>
+<li>وزارة الداخلية: منصة الجرائم الإلكترونية عبر تطبيق MOI UAE أو moi.gov.ae</li>
+<li>الطوارئ: 999</li></ul>
+<p class="src">المصدر: تصريحات منشورة لشرطة أبوظبي ووزارة الداخلية وشرطة دبي عبر وسائل إعلام إماراتية. تحقق من الأرقام من المواقع الرسمية قبل الاعتماد عليها.</p></div>
+</div>
+<div id="p3" class="pg" hidden><div class="card">
+<label for="u"><b>الصق الرابط للتحقق منه</b></label>
+<input id="u" placeholder="https://...">
+<button class="main" id="cu">تحقق من الرابط</button>
+<div id="uo" hidden><span class="badge" id="ul"></span><ul id="ur"></ul></div>
+<p class="note">مواقع الجهات الحكومية الإماراتية تنتهي عادة بـ gov.ae. هذا فحص مساعد وليس ضماناً: الأسلم أن تكتب عنوان الجهة بنفسك في المتصفح أو تستخدم تطبيقها الرسمي. يمكنك أيضاً استخدام أداة Stay Safe من مجلس الأمن السيبراني: staysafe.csc.gov.ae</p>
+</div></div>
+<div id="p4" class="pg" hidden><div class="card">
+<h3>تنبيه فوري عند وصول رسالة أو مكالمة مشبوهة</h3>
+<p>هذه الصفحة لا تستطيع قراءة رسائلك أو مكالماتك في الخلفية، فالتنبيهات التلقائية تحتاج تطبيق جوال حقيقي. هذا عرض توضيحي لشكل التنبيه:</p>
+<button class="main" id="dn">جرّب تنبيهاً تجريبياً</button>
+<div class="phone" id="pn" hidden><b>الحارس · الآن</b><br>رسالة مشبوهة من رقم غير معروف. لا تضغط على الرابط ولا ترسل أي رمز.</div>
+<h3>خطة التطبيق الحقيقي</h3><ul>
+<li>أندرويد: تطبيق بإذن المستخدم يفحص الرسائل الواردة ويستخدم خدمة تصفية المكالمات لتنبيهه أثناء الاتصال، مع مراعاة قيود جوجل على صلاحيات الرسائل.</li>
+<li>آيفون: النظام يمنع قراءة الرسائل والمكالمات، لكنه يسمح بإضافات لتصفية رسائل المرسلين المجهولين وتحديد الأرقام المشبوهة.</li>
+<li>الإيميل: إضافة لتطبيق البريد، أو إرسال الإيميل المشبوه إلى الحارس لفحصه.</li>
+<li>الخصوصية: الفحص على الجهاز قدر الإمكان وبموافقة صريحة ودون تخزين المحتوى.</li></ul></div></div>
+
+<p class="note">نموذج أولي: النتيجة مساعدة وليست حكماً نهائياً. لا تُحفظ أي رسالة في هذه الصفحة. لا تدخل أرقام بطاقات أو كلمات مرور حقيقية.</p>
+</main>
+<script>
+const $=id=>document.getElementById(id);
+const EX=[
+"عزيزي العميل، تم إيقاف حسابك المصرفي. اضغط هنا خلال ساعتين لتحديث بياناتك: http://bank-secure-login.xyz وأرسل رمز التحقق الذي وصلك.",
+"مبروك! ربحت جائزة بقيمة 5000 دولار. للاستلام ادفع رسوم التوصيل عبر الرابط bit.ly/win-now",
+"مرحباً، موعد اجتماع الغد الساعة 10 صباحاً في قاعة الاجتماعات. أرسلت لك جدول الأعمال على البريد."
+];
+const RULES=[
+[/otp|رمز التحقق|رمز التأكيد|الرمز السري|pin/i,35,"يطلب رمزاً سرياً، والجهات الرسمية لا تطلبه أبداً"],
+[/https?:\/\/\S+|bit\.ly|tinyurl|www\./i,20,"يحتوي على رابط يجب عدم فتحه قبل التأكد منه"],
+[/عاجل|فوراً|خلال \d+ (ساعة|ساعتين|دقيقة)|خلال ساعتين|urgent|immediately/i,20,"يخلق شعوراً بالاستعجال كي لا تفكر"],
+[/موقوف|معلق|تعليق|إيقاف|suspend|blocked|locked/i,20,"يهدد بإيقاف حسابك"],
+[/ربحت|جائزة|مبروك|هدية|winner|prize/i,25,"يعدك بجائزة أو ربح غير متوقع"],
+[/كلمة المرور|password|رقم البطاقة|بيانات البطاقة|cvv/i,35,"يطلب بيانات حساسة"],
+[/رسوم|ادفع|تحويل|حوالة|transfer/i,15,"يطلب مالاً أو تحويلاً"]
+];
+const ACT={
+dangerous:["لا تضغط على أي رابط ولا ترسل أي رمز.","لا ترد على المرسل.","تواصل مع الجهة من رقمها الرسمي فقط.","احذف الرسالة وبلّغ عنها."],
+suspicious:["لا تفتح الرابط قبل التحقق.","اتصل بالجهة من رقمها الرسمي وتأكد.","لا ترسل بيانات شخصية."],
+safe:["لا مؤشرات واضحة، لكن ابقَ حذراً.","تحقق دائماً إذا طُلب منك مال أو بيانات."]
+};
+const NAME={safe:"آمنة على الأغلب",suspicious:"مشبوهة",dangerous:"خطيرة"};
+function local(t){let s=0,r=[];for(const [re,p,m] of RULES)if(re.test(t)){s+=p;r.push(m)}
+s=Math.min(s,100);const level=s>=60?"dangerous":s>=25?"suspicious":"safe";
+return{level,score:s,reasons:r.length?r:["لم تظهر مؤشرات احتيال واضحة"],actions:ACT[level]}}
+function fill(id,arr){const e=$(id);e.textContent="";arr.forEach(x=>{const li=document.createElement("li");li.textContent=x;e.appendChild(li)})}
+function show(r,src){
+const lv=NAME[r.level]?r.level:"suspicious";
+$("out").hidden=false;$("lv").className="badge "+lv;$("lv").textContent=NAME[lv];
+$("sc").textContent="درجة الخطورة: "+Math.round(Number(r.score)||0)+" من 100";
+fill("rs",(r.reasons||[]).slice(0,6).map(String));fill("ac",(r.actions||ACT[lv]).slice(0,6).map(String));
+$("src").textContent="مصدر التحليل: "+src;$("out").scrollIntoView({behavior:"smooth"})}
+async function run(){
+const t=$("t").value.trim();if(!t)return;
+$("go").disabled=true;$("go").textContent="جارٍ الفحص...";
+let r=null,src="فحص محلي بالقواعد (بدون اتصال)";
+try{
+const res=await fetch("/api/analyze",{method:"POST",headers:{"Content-Type":"application/json"},body:JSON.stringify({text:t,kind:$("kind").selectedIndex})});
+if(res.ok){const d=await res.json();r=d.result;src=d.source}
+}catch(e){r=null}
+if(!r||!r.level){r=local(t);src="فحص محلي بالقواعد (بدون اتصال)"}
+show(r,src);
+$("go").disabled=false;$("go").textContent="افحص الآن"}
+$("go").onclick=run;
+document.querySelectorAll('.tabs button').forEach(b=>b.onclick=()=>{document.querySelectorAll('.tabs button').forEach(x=>x.classList.toggle('on',x===b));document.querySelectorAll('.pg').forEach(p=>p.hidden=p.id!==b.dataset.p)});
+const OFF=['ecrime.ae','u.ae','salik.ae','uaepass.ae'],SHORT=['bit.ly','tinyurl.com','t.co','cutt.ly','is.gd'];
+function chk(raw){const r=[];let lv='safe',u;
+try{u=new URL(raw.includes('://')?raw:'https://'+raw)}catch(e){return{lv:'suspicious',r:['العنوان غير صالح']}}
+const h=u.hostname.toLowerCase();
+const gov=h==='gov.ae'||h.endsWith('.gov.ae'),known=OFF.some(d=>h===d||h.endsWith('.'+d));
+if(gov||known){r.push('النطاق ('+h+') من النطاقات الرسمية المعروفة')}
+else{lv='dangerous';r.push('النطاق ('+h+') ليس نطاقاً حكومياً إماراتياً معروفاً');
+if(/gov|uae|emirates|police|moi|mohre|bank/.test(h))r.push('يحاول تقليد اسم جهة رسمية')}
+if(u.protocol!=='https:'){if(lv==='safe')lv='suspicious';r.push('الاتصال غير مشفّر (http)')}
+if(/^[0-9.]+$/.test(h)){lv='dangerous';r.push('العنوان رقم IP وليس اسم موقع')}
+if(h.includes('xn--')){lv='dangerous';r.push('يحتوي حروفاً مموّهة تشبه حروفاً أخرى')}
+if(SHORT.includes(h)){lv='dangerous';r.push('رابط مختصر يخفي الوجهة الحقيقية')}
+return{lv,r}}
+$('cu').onclick=()=>{const v=$('u').value.trim();if(!v)return;const o=chk(v);$('uo').hidden=false;$('ul').className='badge '+o.lv;$('ul').textContent=o.lv==='safe'?'يبدو رسمياً':o.lv==='suspicious'?'تحقق إضافي':'غير رسمي أو مشبوه';fill('ur',o.r)};
+$('dn').onclick=()=>{$('pn').hidden=false;try{if(window.Notification&&Notification.permission!=='denied'){Notification.requestPermission().then(p=>{if(p==='granted')new Notification('الحارس: رسالة مشبوهة',{body:'لا تضغط على الرابط ولا ترسل أي رمز.'})})}}catch(e){}};
+document.querySelectorAll("[data-i]").forEach(b=>b.onclick=()=>{$("t").value=EX[b.dataset.i]});
+</script>
+</body>
+</html>

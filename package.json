@@ -1,0 +1,12 @@
+{
+  "name": "al-haris",
+  "version": "1.0.0",
+  "description": "Al Haris: an AI assistant that detects scam messages, emails, calls and fake government links (UAE focus).",
+  "main": "server.js",
+  "scripts": {
+    "start": "node server.js",
+    "test": "node --test"
+  },
+  "engines": { "node": ">=18" },
+  "license": "MIT"
+}
